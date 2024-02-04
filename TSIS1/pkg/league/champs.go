@@ -49,7 +49,7 @@ type Champion struct {
 }
 
 func GetChamps(w http.ResponseWriter, r *http.Request) {
-	filePath := `assets\champs.json`
+	filePath := `assets\league\champs.json`
 	jsonData, err := os.ReadFile(filePath)
 	if err != nil {
 		panic(err)
@@ -58,7 +58,7 @@ func GetChamps(w http.ResponseWriter, r *http.Request) {
 }
 
 func getChamps() {
-	filePath := `assets\champs.json`
+	filePath := `assets\league\champs.json`
 	jsonData, err := os.ReadFile(filePath)
 	if err != nil {
 		log.Println("Error reading JSON file:", err)
@@ -80,10 +80,6 @@ func GetChamp(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	name := params["name"]
 	champ = *findChampionByID(name)
-	if &champ == nil {
-		w.Write([]byte("Error"))
-		return
-	}
 	jsonChamp, err := json.Marshal(champ)
 	if err != nil {
 		w.Write([]byte("No champ"))
@@ -100,10 +96,6 @@ func GetChampParam(w http.ResponseWriter, r *http.Request) {
 	param := params["param"]
 
 	champ = *findChampionByID(name)
-	if &champ == nil {
-		w.Write([]byte("No such champ in LoL!"))
-		return
-	}
 	statsMap := make(map[string]interface{})
 	jsonChamp, err := json.Marshal(champ)
 	if err != nil {
@@ -140,5 +132,5 @@ func findChampionByID(id string) *Champion {
 			return &champ
 		}
 	}
-	return nil
+	return new(Champion)
 }

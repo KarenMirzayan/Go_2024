@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"champinfo.com/api/pkg"
+	"champinfo.com/api/pkg/league"
 	"github.com/gorilla/mux"
 )
 
